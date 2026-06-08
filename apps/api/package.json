@@ -1,0 +1,29 @@
+{
+  "name": "@redibook/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "dev": "node --env-file-if-exists=../../.env --import tsx --watch src/main.ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "latest",
+    "@nestjs/core": "latest",
+    "@nestjs/platform-express": "latest",
+    "@redibook/ai": "workspace:*",
+    "@redibook/contracts": "workspace:*",
+    "@redibook/database": "workspace:*",
+    "@redibook/ingestion": "workspace:*",
+    "@redibook/observability": "workspace:*",
+    "@redibook/queue": "workspace:*",
+    "bullmq": "latest",
+    "reflect-metadata": "latest",
+    "rxjs": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "latest"
+  }
+}

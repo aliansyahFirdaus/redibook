@@ -1,0 +1,3 @@
+export const DATABASE = Symbol("DATABASE");
+export const EMBEDDING_PROVIDER = Symbol("EMBEDDING_PROVIDER");
+export const REASONING_PROVIDER = Symbol("REASONING_PROVIDER");

@@ -1,0 +1,32 @@
+- description: Five-failure login lock
+  vars:
+    requirement: Lock a user account after five failed login attempts.
+    evidence: auth-lockout says accounts currently lock after three failures.
+  assert:
+    - type: is-json
+    - type: icontains
+      value: fifth failed login
+    - type: icontains
+      value: auth-lockout
+
+- description: Deferred certificate completion
+  vars:
+    requirement: Defer certificate completion until a reviewer approves the course.
+    evidence: certificate-completion says completion is immediate after the final lesson.
+  assert:
+    - type: is-json
+    - type: icontains
+      value: remain pending
+    - type: icontains
+      value: certificate-completion
+
+- description: Salary percentage changes
+  vars:
+    requirement: Change salary adjustments from fixed amounts to percentage changes.
+    evidence: salary-adjustment defines adjustments as a fixed currency amount.
+  assert:
+    - type: is-json
+    - type: icontains
+      value: percentage
+    - type: icontains
+      value: salary-adjustment

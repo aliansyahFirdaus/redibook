@@ -1,0 +1,27 @@
+{
+  "name": "@redibook/database",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "typecheck": "tsc --noEmit",
+    "migrate": "node --env-file-if-exists=../../.env --import tsx src/migrate.ts"
+  },
+  "dependencies": {
+    "pg": "latest"
+  },
+  "devDependencies": {
+    "@types/pg": "latest",
+    "tsup": "latest"
+  }
+}

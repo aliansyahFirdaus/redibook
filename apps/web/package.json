@@ -1,0 +1,26 @@
+{
+  "name": "@redibook/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vinxi build",
+    "typecheck": "tsc --noEmit",
+    "dev": "vinxi dev --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@redibook/contracts": "workspace:*",
+    "@solidjs/meta": "latest",
+    "@solidjs/router": "latest",
+    "@solidjs/start": "latest",
+    "@tanstack/solid-query": "latest",
+    "lucide-solid": "^1.17.0",
+    "solid-js": "latest",
+    "vinxi": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "latest",
+    "tailwindcss": "latest"
+  }
+}

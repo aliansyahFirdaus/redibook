@@ -1,0 +1,37 @@
+{
+  "name": "redibook",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter './packages/**' build && pnpm -r --filter './apps/**' build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:promptfoo": "PROMPTFOO_CONFIG_DIR=./promptfoo/.config PROMPTFOO_DISABLE_TELEMETRY=1 PROMPTFOO_DISABLE_UPDATE=1 promptfoo eval --config promptfoo/promptfooconfig.yaml --no-cache",
+    "test:promptfoo:live": "PROMPTFOO_CONFIG_DIR=./promptfoo/.config PROMPTFOO_DISABLE_TELEMETRY=1 PROMPTFOO_DISABLE_UPDATE=1 LIVE_AI_TESTS=true promptfoo eval --config promptfoo/promptfooconfig.live.yaml --no-cache",
+    "db:migrate": "pnpm --filter @redibook/database migrate",
+    "smoke": "node scripts/smoke.mjs",
+    "dev:web": "pnpm --filter @redibook/web dev",
+    "dev:api": "pnpm --filter @redibook/api dev",
+    "dev:worker": "pnpm --filter @redibook/worker dev"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/node": "latest",
+    "eslint": "latest",
+    "promptfoo": "latest",
+    "tsx": "latest",
+    "typescript": "5.9.3",
+    "typescript-eslint": "latest",
+    "vitest": "latest"
+  },
+  "pnpm": {
+    "overrides": {
+      "ioredis": "5.10.1",
+      "typescript": "5.9.3"
+    }
+  }
+}

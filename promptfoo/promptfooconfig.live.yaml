@@ -1,0 +1,19 @@
+description: Redibook live Claude impact evaluation
+
+prompts:
+  - |
+    Analyze this product change using only the evidence.
+    Return JSON with summary, affectedKnowledge, possibleConflicts,
+    missingQuestions, suggestedTests, and evidence.
+    Requirement: {{requirement}}
+    Evidence: {{evidence}}
+
+providers:
+  - id: anthropic:messages:claude-sonnet-4-6
+
+tests: file://cases.yaml
+
+commandLineOptions:
+  maxConcurrency: 1
+
+outputPath: results/live.json

@@ -1,0 +1,26 @@
+{
+  "name": "@redibook/worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "dev": "node --env-file-if-exists=../../.env --import tsx --watch src/main.ts"
+  },
+  "dependencies": {
+    "@nestjs/bullmq": "latest",
+    "@nestjs/common": "latest",
+    "@nestjs/core": "latest",
+    "@redibook/ai": "workspace:*",
+    "@redibook/contracts": "workspace:*",
+    "@redibook/database": "workspace:*",
+    "@redibook/ingestion": "workspace:*",
+    "@redibook/observability": "workspace:*",
+    "@redibook/queue": "workspace:*",
+    "@redibook/retrieval": "workspace:*",
+    "bullmq": "latest",
+    "reflect-metadata": "latest",
+    "rxjs": "latest"
+  }
+}

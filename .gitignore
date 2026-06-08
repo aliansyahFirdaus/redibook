@@ -1,0 +1,10 @@
+node_modules
+dist
+.output
+.vinxi
+.env
+coverage
+promptfoo/results
+promptfoo/.config
+*.log
+.DS_Store

@@ -1,0 +1,558 @@
+{
+  "evalId": "eval-4ov-2026-06-07T08:35:53",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-06-07T08:35:53.328Z",
+    "prompts": [
+      {
+        "id": "6353c2563cd215540fdb1e7eb03f6fe55096af324cb6371139f6ffc114e27c38",
+        "raw": "Requirement: {{requirement}}\nEvidence: {{evidence}}\n",
+        "label": "Requirement: {{requirement}}\nEvidence: {{evidence}}\n",
+        "provider": "redibook:mock-impact",
+        "metrics": {
+          "score": 3,
+          "testPassCount": 3,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 9,
+          "assertFailCount": 0,
+          "totalLatencyMs": 1,
+          "tokenUsage": {
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "total": 0,
+            "numRequests": 3,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "fifth failed login"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "auth-lockout"
+              }
+            }
+          ]
+        },
+        "id": "c6d8c791-3bfe-45e9-abfe-be7438646456",
+        "latencyMs": 1,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Requirement: Lock a user account after five failed login attempts.\nEvidence: auth-lockout says accounts currently lock after three failures.\n",
+          "label": "Requirement: {{requirement}}\nEvidence: {{evidence}}\n",
+          "config": {}
+        },
+        "promptId": "6353c2563cd215540fdb1e7eb03f6fe55096af324cb6371139f6ffc114e27c38",
+        "promptIdx": 0,
+        "provider": {
+          "id": "redibook:mock-impact",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"summary\":\"Login lockout changes from the documented attempt policy to five failures.\",\"affectedKnowledge\":[\"Authentication / Lockout\"],\"possibleConflicts\":[\"Existing guidance uses a different failure threshold.\"],\"missingQuestions\":[\"How is an account unlocked?\"],\"suggestedTests\":[\"Verify the fifth failed login locks the account.\"],\"evidence\":[\"auth-lockout\"]}"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Five-failure login lock",
+          "vars": {
+            "requirement": "Lock a user account after five failed login attempts.",
+            "evidence": "auth-lockout says accounts currently lock after three failures."
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "icontains",
+              "value": "fifth failed login"
+            },
+            {
+              "type": "icontains",
+              "value": "auth-lockout"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "requirement": "Lock a user account after five failed login attempts.",
+          "evidence": "auth-lockout says accounts currently lock after three failures."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "remain pending"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "certificate-completion"
+              }
+            }
+          ]
+        },
+        "id": "fc0c5e2e-08eb-4606-b9d3-4dd816ac56d3",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Requirement: Defer certificate completion until a reviewer approves the course.\nEvidence: certificate-completion says completion is immediate after the final lesson.\n",
+          "label": "Requirement: {{requirement}}\nEvidence: {{evidence}}\n",
+          "config": {}
+        },
+        "promptId": "6353c2563cd215540fdb1e7eb03f6fe55096af324cb6371139f6ffc114e27c38",
+        "promptIdx": 0,
+        "provider": {
+          "id": "redibook:mock-impact",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"summary\":\"Certificate completion becomes deferred until required review is complete.\",\"affectedKnowledge\":[\"Learning / Completion\"],\"possibleConflicts\":[\"Current completion is immediate.\"],\"missingQuestions\":[\"What event releases the certificate?\"],\"suggestedTests\":[\"Verify certificates remain pending before review.\"],\"evidence\":[\"certificate-completion\"]}"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Deferred certificate completion",
+          "vars": {
+            "requirement": "Defer certificate completion until a reviewer approves the course.",
+            "evidence": "certificate-completion says completion is immediate after the final lesson."
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "icontains",
+              "value": "remain pending"
+            },
+            {
+              "type": "icontains",
+              "value": "certificate-completion"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "requirement": "Defer certificate completion until a reviewer approves the course.",
+          "evidence": "certificate-completion says completion is immediate after the final lesson."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "percentage"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "value": "salary-adjustment"
+              }
+            }
+          ]
+        },
+        "id": "2f57688f-8ba0-4243-9d00-0e007171fd42",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Requirement: Change salary adjustments from fixed amounts to percentage changes.\nEvidence: salary-adjustment defines adjustments as a fixed currency amount.\n",
+          "label": "Requirement: {{requirement}}\nEvidence: {{evidence}}\n",
+          "config": {}
+        },
+        "promptId": "6353c2563cd215540fdb1e7eb03f6fe55096af324cb6371139f6ffc114e27c38",
+        "promptIdx": 0,
+        "provider": {
+          "id": "redibook:mock-impact",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"summary\":\"Salary adjustments change from fixed amounts to percentages.\",\"affectedKnowledge\":[\"Compensation / Adjustments\"],\"possibleConflicts\":[\"Rounding and historical calculations may differ.\"],\"missingQuestions\":[\"Which salary base and rounding rule apply?\"],\"suggestedTests\":[\"Verify percentage changes for positive and negative adjustments.\"],\"evidence\":[\"salary-adjustment\"]}"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Salary percentage changes",
+          "vars": {
+            "requirement": "Change salary adjustments from fixed amounts to percentage changes.",
+            "evidence": "salary-adjustment defines adjustments as a fixed currency amount."
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "icontains",
+              "value": "percentage"
+            },
+            {
+              "type": "icontains",
+              "value": "salary-adjustment"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "requirement": "Change salary adjustments from fixed amounts to percentage changes.",
+          "evidence": "salary-adjustment defines adjustments as a fixed currency amount."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 3,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 3,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 26,
+      "evaluationDurationMs": 26
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "Redibook offline evidence-backed impact evaluation",
+    "prompts": [
+      "Requirement: {{requirement}}\nEvidence: {{evidence}}\n"
+    ],
+    "providers": [
+      "file://provider.mjs"
+    ],
+    "tests": [
+      {
+        "description": "Five-failure login lock",
+        "vars": {
+          "requirement": "Lock a user account after five failed login attempts.",
+          "evidence": "auth-lockout says accounts currently lock after three failures."
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "icontains",
+            "value": "fifth failed login"
+          },
+          {
+            "type": "icontains",
+            "value": "auth-lockout"
+          }
+        ]
+      },
+      {
+        "description": "Deferred certificate completion",
+        "vars": {
+          "requirement": "Defer certificate completion until a reviewer approves the course.",
+          "evidence": "certificate-completion says completion is immediate after the final lesson."
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "icontains",
+            "value": "remain pending"
+          },
+          {
+            "type": "icontains",
+            "value": "certificate-completion"
+          }
+        ]
+      },
+      {
+        "description": "Salary percentage changes",
+        "vars": {
+          "requirement": "Change salary adjustments from fixed amounts to percentage changes.",
+          "evidence": "salary-adjustment defines adjustments as a fixed currency amount."
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "icontains",
+            "value": "percentage"
+          },
+          {
+            "type": "icontains",
+            "value": "salary-adjustment"
+          }
+        ]
+      }
+    ],
+    "env": {},
+    "outputPath": [
+      "results/offline.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.15",
+    "nodeVersion": "v22.22.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-06-07T08:35:53.416Z",
+    "evaluationCreatedAt": "2026-06-07T08:35:53.328Z"
+  },
+  "vars": [
+    "requirement",
+    "evidence"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "showProgressBar": true,
+    "repeat": 1,
+    "maxConcurrency": 1,
+    "cache": false
+  }
+}

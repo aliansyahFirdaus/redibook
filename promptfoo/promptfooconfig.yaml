@@ -1,0 +1,16 @@
+description: Redibook offline evidence-backed impact evaluation
+
+prompts:
+  - |
+    Requirement: {{requirement}}
+    Evidence: {{evidence}}
+
+providers:
+  - file://provider.mjs
+
+tests: file://cases.yaml
+
+commandLineOptions:
+  maxConcurrency: 1
+
+outputPath: results/offline.json
