@@ -1,9 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   collectOutlineLeafDocuments,
   extractOutlineCollectionId,
   extractOutlineDocumentId,
   flattenOutlineDocumentTree,
+  SourcesService,
   shouldIndexOutlineDocument,
   type OutlineDocumentTreeNode,
 } from "./sources.module.js";
@@ -90,5 +91,108 @@ describe("outline source helpers", () => {
   it("indexes changed or failed Outline documents", () => {
     expect(shouldIndexOutlineDocument("old", "new", "ready")).toBe(true);
     expect(shouldIndexOutlineDocument("same", "same", "failed")).toBe(true);
+  });
+
+  it("removes stale docs only for the active Outline collection scope", async () => {
+    const docs = [
+      { id: "doc-stale", source_type: "outline", metadata: { collectionId: "col-a" }, outline_document_id: "stale-doc" },
+      { id: "doc-keep", source_type: "outline", metadata: { collectionId: "col-a" }, outline_document_id: "keep-doc" },
+      { id: "doc-other", source_type: "outline", metadata: { collectionId: "col-b" }, outline_document_id: "other-doc" },
+      { id: "doc-manual", source_type: "manual", metadata: { collectionId: "col-a" }, outline_document_id: "manual-doc" },
+      { id: "doc-missing-outline-id", source_type: "outline", metadata: { collectionId: "col-a" }, outline_document_id: null },
+    ];
+    const groups = [
+      { id: "group-stale", group_type: "sprint", outline_collection_id: "col-a" },
+      { id: "group-keep", group_type: "sprint", outline_collection_id: "col-a" },
+      { id: "group-other", group_type: "sprint", outline_collection_id: "col-b" },
+    ];
+    const links = [
+      { group_id: "group-stale", document_id: "doc-stale" },
+      { group_id: "group-keep", document_id: "doc-keep" },
+      { group_id: "group-other", document_id: "doc-other" },
+    ];
+
+    const database = {
+      query: vi.fn(async (sql: string, params?: unknown[]) => {
+        if (sql.includes("DELETE FROM source_documents")) {
+          const [collectionId, activeIds] = params as [string, string[]];
+          const removed = docs.filter((doc) =>
+            doc.source_type === "outline"
+            && doc.metadata.collectionId === collectionId
+            && doc.outline_document_id !== null
+            && !activeIds.includes(doc.outline_document_id),
+          );
+          for (const doc of removed) {
+            const index = docs.findIndex((item) => item.id === doc.id);
+            if (index >= 0) docs.splice(index, 1);
+          }
+          for (let index = links.length - 1; index >= 0; index -= 1) {
+            if (removed.some((doc) => doc.id === links[index]!.document_id)) links.splice(index, 1);
+          }
+          return { rows: removed.map((doc) => ({ id: doc.id })), rowCount: removed.length };
+        }
+
+        if (sql.includes("DELETE FROM source_groups sg")) {
+          const [collectionId] = params as [string];
+          const removed = groups.filter((group) =>
+            group.group_type === "sprint"
+            && group.outline_collection_id === collectionId
+            && !links.some((link) => link.group_id === group.id),
+          );
+          for (const group of removed) {
+            const index = groups.findIndex((item) => item.id === group.id);
+            if (index >= 0) groups.splice(index, 1);
+          }
+          return { rows: [], rowCount: removed.length };
+        }
+
+        throw new Error(`Unexpected query: ${sql}`);
+      }),
+    };
+    const queue = { add: vi.fn() };
+    const service = new SourcesService(database as never, queue as never);
+
+    const removed = await (service as any).removeStaleCollectionDocuments("col-a", ["keep-doc"]);
+
+    expect(removed).toBe(1);
+    expect(docs.map((doc) => doc.id)).toEqual([
+      "doc-keep",
+      "doc-other",
+      "doc-manual",
+      "doc-missing-outline-id",
+    ]);
+    expect(groups.map((group) => group.id)).toEqual(["group-keep", "group-other"]);
+  });
+
+  it("does not run stale cleanup when sync fails midway", async () => {
+    const service = new SourcesService({ query: vi.fn() } as never, { add: vi.fn() } as never);
+    const cleanup = vi.fn();
+
+    (service as any).fetchOutlineCollectionInfo = vi.fn().mockResolvedValue({
+      id: "col-a",
+      name: "Collection A",
+      url: "https://docs.example.com/collection/col-a",
+    });
+    (service as any).fetchOutlineCollectionTree = vi.fn().mockResolvedValue([
+      { id: "doc-1", title: "Doc 1", children: [] },
+      { id: "doc-2", title: "Doc 2", children: [] },
+    ]);
+    (service as any).fetchOutlineDocument = vi.fn()
+      .mockResolvedValueOnce({ id: "doc-1", title: "Doc 1", text: "Body 1", url: "https://docs.example.com/doc/doc-1" })
+      .mockRejectedValueOnce(new Error("Outline documents.info failed"));
+    (service as any).upsertOutlineDocument = vi.fn().mockResolvedValue({
+      id: "source-1",
+      indexRevision: 2,
+      changed: true,
+      enqueued: true,
+    });
+    (service as any).upsertSprintGroup = vi.fn().mockResolvedValue("group-1");
+    (service as any).replaceDocumentSprintGroup = vi.fn().mockResolvedValue(undefined);
+    (service as any).removeStaleCollectionDocuments = cleanup;
+
+    await expect(service.syncOutlineCollection({
+      collectionId: "col-a",
+    })).rejects.toThrow("Outline documents.info failed");
+    expect(cleanup).not.toHaveBeenCalled();
   });
 });

@@ -254,7 +254,7 @@ export class SourcesService {
     const tree = await this.fetchOutlineCollectionTree(collectionId);
     const leafDocuments = dedupeOutlineLeaves(collectOutlineLeafDocuments(tree));
     let indexed = 0;
-    let unchanged = 0;
+    let skipped = 0;
 
     for (const leaf of leafDocuments) {
       const payload = await this.fetchOutlineDocument(leaf.id);
@@ -266,7 +266,7 @@ export class SourcesService {
         outlineOrder: leaf.orderPath,
       });
       if (enqueued) indexed += 1;
-      else unchanged += 1;
+      else skipped += 1;
 
       const sprintNode = leaf.ancestry[0];
       const sprintGroupId = sprintNode
@@ -281,7 +281,7 @@ export class SourcesService {
       status: "pending" as const,
       synced: leafDocuments.length,
       indexed,
-      unchanged,
+      skipped,
       removed,
     };
   }
@@ -513,6 +513,7 @@ export class SourcesService {
       DELETE FROM source_documents
       WHERE source_type = 'outline'
         AND metadata->>'collectionId' = $1
+        AND outline_document_id IS NOT NULL
         AND NOT (outline_document_id = ANY($2::text[]))
       RETURNING id
     `, [collectionId, activeOutlineDocumentIds]);
